@@ -1,9 +1,9 @@
 // UseCase for fetching jokes
 class FetchJokesUseCase {
-    private let provider: JokeProvider
-    private let mockProvider: JokeProvider
+    private let provider: JokeRepository
+    private let mockProvider: JokeRepository
     
-    init(provider: JokeProvider, mockProvider: JokeProvider) {
+    init(provider: JokeRepository, mockProvider: JokeRepository) {
         self.provider = provider
         self.mockProvider = mockProvider
     }

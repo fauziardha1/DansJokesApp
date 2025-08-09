@@ -20,7 +20,7 @@ class MockDataProvider {
     }
 }
 
-extension MockDataProvider: JokeProvider {
+extension MockDataProvider: JokeRepository {
     func fetchJokes(amount: Int, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
         let jokes = generateMockJokes(count: amount)
         completion(.success(jokes))
