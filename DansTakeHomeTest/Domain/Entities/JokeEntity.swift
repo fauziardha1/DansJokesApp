@@ -1,5 +1,5 @@
 // Joke entity for domain layer
-struct JokeEntity {
+struct JokeEntity: Equatable, Identifiable {
     let id: String
     let category: String
     let type: String
