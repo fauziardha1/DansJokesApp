@@ -4,7 +4,9 @@ import Foundation
 class MockDataProvider {
     func generateMockJokes(count: Int) -> [JokeEntity] {
         var jokes: [JokeEntity] = []
-        for i in 1...count {
+        for _ in 1...count {
+            // get random number
+            let i = Int.random(in: 1...1000)
             jokes.append(JokeEntity(
                 id: "mock\(i)",
                 category: "MockCategory",
