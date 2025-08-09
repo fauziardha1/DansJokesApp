@@ -14,7 +14,7 @@ class BookmarkViewController: UIViewController {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "BookmarkCell")
+        tableView.register(JokeCell.self, forCellReuseIdentifier: JokeCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -38,9 +38,12 @@ extension BookmarkViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: JokeCell.identifier, for: indexPath) as? JokeCell else {
+            return UITableViewCell()
+        }
         let joke = viewModel.bookmarks[indexPath.row]
-        cell.textLabel?.text = joke.joke ?? joke.setup ?? "No Title"
+        cell.configure(with: joke, isBookmarked: true, bookmarkAction: nil)
+        cell.showsBookmarkButton = false
         return cell
     }
 }

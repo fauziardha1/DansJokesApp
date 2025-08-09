@@ -8,6 +8,11 @@ class JokeCell: UITableViewCell {
     let bookmarkButton = UIButton(type: .system)
     
     var bookmarkAction: (() -> Void)?
+    var showsBookmarkButton: Bool = true {
+        didSet {
+            bookmarkButton.isHidden = !showsBookmarkButton
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,6 +53,7 @@ class JokeCell: UITableViewCell {
         ])
         
         bookmarkButton.addTarget(self, action: #selector(bookmarkTapped), for: .touchUpInside)
+        bookmarkButton.isHidden = !showsBookmarkButton
     }
     
     func configure(with joke: JokeEntity, isBookmarked: Bool, bookmarkAction: (() -> Void)?) {
@@ -57,6 +63,7 @@ class JokeCell: UITableViewCell {
         bookmarkButton.setImage(UIImage(systemName: imageName), for: .normal)
         bookmarkButton.tintColor = isBookmarked ? .systemBlue : .lightGray
         self.bookmarkAction = bookmarkAction
+        bookmarkButton.isHidden = !showsBookmarkButton
     }
     
     @objc private func bookmarkTapped() {

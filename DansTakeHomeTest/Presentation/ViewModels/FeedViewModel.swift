@@ -55,6 +55,7 @@ class FeedViewModel {
                         self.currentPage += 1
                     } else {
                         self.jokes = newJokes
+                        self.currentPage = 2 // next loadMore will fetch page 2
                     }
                 case .failure(let error):
                     self.error = error
@@ -64,21 +65,18 @@ class FeedViewModel {
                     }
                     let start = (self.currentPage - 1) * self.pageSize
                     let end = min(start + self.pageSize, self.allMockJokes.count)
-                    let nextJokes = Array(self.allMockJokes[start..<end])
-                    if loadMore {
-                        self.jokes.append(contentsOf: nextJokes)
-                        self.currentPage += 1
-                    } else {
-                        self.jokes = nextJokes
+                    if start < end {
+                        let nextJokes = Array(self.allMockJokes[start..<end])
+                        if loadMore {
+                            self.jokes.append(contentsOf: nextJokes)
+                        } else {
+                            self.jokes = nextJokes
+                        }
+                        self.currentPage += 1 // always increment after loading mock data
                     }
                 }
                 self.onUpdate?()
             }
         }
-    }
-    
-    private func getMockJokes() -> [JokeEntity] {
-        // Deprecated: use paginated mock in loadJokes
-        return []
     }
 }
