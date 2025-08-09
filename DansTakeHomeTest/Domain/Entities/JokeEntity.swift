@@ -6,6 +6,4 @@ struct JokeEntity {
     let joke: String?
     let setup: String?
     let delivery: String?
-    let author: String?
-    let imageUrl: String?
 }

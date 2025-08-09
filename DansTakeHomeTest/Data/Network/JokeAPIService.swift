@@ -25,6 +25,10 @@ class JokeAPIService {
             do {
                 let responseDTO = try JSONDecoder().decode(JokesResponseDTO.self, from: data)
                 completion(.success(responseDTO.jokes))
+                // print response json string
+                let jsonString = String(data: data, encoding: .utf8) ?? "No JSON String"
+                print(jsonString)
+                
             } catch {
                 completion(.failure(error))
             }

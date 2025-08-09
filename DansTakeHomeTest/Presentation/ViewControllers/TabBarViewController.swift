@@ -1,21 +1,20 @@
 //
-//  HomeViewController.swift
+//  TabBarViewController.swift
 //  DansTakeHomeTest
 //
 //  Created by Fauzi Arda on 09/08/25.
 //
 import UIKit
 
-class HomeViewController: UITabBarController {
+class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        // Setup dependencies
-        let jokeRepository = JokeRepositoryImpl(apiService: JokeAPIService())
-        let fetchJokesUseCase = FetchJokesUseCase(repository: jokeRepository)
-        let feedViewModel = FeedViewModel(fetchJokesUseCase: fetchJokesUseCase)
-        let bookmarkViewModel = BookmarkViewModel()
+        // Setup dependencies using DI container
+        let diContainer = AppDIContainer()
+        let feedViewModel = diContainer.makeFeedViewModel()
+        let bookmarkViewModel = diContainer.makeBookmarkViewModel()
         
         // Feed Tab
         let feedVC = FeedViewController()

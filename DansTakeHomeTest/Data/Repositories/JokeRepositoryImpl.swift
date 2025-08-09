@@ -1,7 +1,7 @@
 import Foundation
 
 // Repository implementation for Joke
-class JokeRepositoryImpl: JokeRepository {
+class JokeRepositoryImpl: JokeRepository, JokeProvider {
     private let apiService: JokeAPIService
     
     init(apiService: JokeAPIService) {
@@ -19,9 +19,7 @@ class JokeRepositoryImpl: JokeRepository {
                         type: dto.type,
                         joke: dto.joke,
                         setup: dto.setup,
-                        delivery: dto.delivery,
-                        author: nil, // Not available in API
-                        imageUrl: nil // Not available in API
+                        delivery: dto.delivery
                     )
                 }
                 completion(.success(entities))
@@ -31,3 +29,5 @@ class JokeRepositoryImpl: JokeRepository {
         }
     }
 }
+
+//extension JokeRepositoryImpl: JokeProvider {}

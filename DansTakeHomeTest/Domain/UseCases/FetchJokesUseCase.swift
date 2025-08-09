@@ -1,12 +1,18 @@
 // UseCase for fetching jokes
 class FetchJokesUseCase {
-    private let repository: JokeRepository
+    private let provider: JokeProvider
+    private let mockProvider: JokeProvider
     
-    init(repository: JokeRepository) {
-        self.repository = repository
+    init(provider: JokeProvider, mockProvider: JokeProvider) {
+        self.provider = provider
+        self.mockProvider = mockProvider
     }
     
-    func execute(amount: Int, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
-        repository.fetchJokes(amount: amount, completion: completion)
+    func fetchJokes(amount: Int, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
+        provider.fetchJokes(amount: amount, completion: completion)
+    }
+    
+    func fetchMockJokes(amount: Int, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
+        mockProvider.fetchJokes(amount: amount, completion: completion)
     }
 }

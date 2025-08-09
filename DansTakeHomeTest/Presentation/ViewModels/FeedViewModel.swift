@@ -10,40 +10,21 @@ class FeedViewModel {
     
     private var currentPage = 1
     private let pageSize = 10
-    private var allMockJokes: [JokeEntity] = []
     
     init(fetchJokesUseCase: FetchJokesUseCase) {
         self.fetchJokesUseCase = fetchJokesUseCase
     }
     
-    private func generateMockJokes(count: Int) -> [JokeEntity] {
-        var jokes: [JokeEntity] = []
-        for i in 1...count {
-            jokes.append(JokeEntity(
-                id: "mock\(i)",
-                category: "MockCategory",
-                type: "twopart",
-                joke: nil,
-                setup: "Mock setup #\(i)",
-                delivery: "Mock delivery #\(i)",
-                author: nil,
-                imageUrl: nil
-            ))
-        }
-        return jokes
-    }
-    
     func loadJokes(loadMore: Bool = false) {
         if isLoading { return }
         isLoading = true
-        //show loading
         onUpdate?()
         error = nil
         if !loadMore {
             jokes = []
             currentPage = 1
         }
-        fetchJokesUseCase.execute(amount: pageSize) { [weak self] result in
+        fetchJokesUseCase.fetchJokes(amount: pageSize) { [weak self] result in
             self?.onUpdate?()
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -58,21 +39,26 @@ class FeedViewModel {
                         self.currentPage = 2 // next loadMore will fetch page 2
                     }
                 case .failure(let error):
+                    // On error, try to get mock jokes from usecase
                     self.error = error
-                    // Provide paginated mock data on error
-                    if self.allMockJokes.isEmpty {
-                        self.allMockJokes = self.generateMockJokes(count: 100)
-                    }
-                    let start = (self.currentPage - 1) * self.pageSize
-                    let end = min(start + self.pageSize, self.allMockJokes.count)
-                    if start < end {
-                        let nextJokes = Array(self.allMockJokes[start..<end])
-                        if loadMore {
-                            self.jokes.append(contentsOf: nextJokes)
-                        } else {
-                            self.jokes = nextJokes
+                    self.onUpdate?()
+                    self.fetchJokesUseCase.fetchMockJokes(amount: self.pageSize) { mockResult in
+                        DispatchQueue.main.async {
+                            switch mockResult {
+                            case .success(let mockJokes):
+                                if loadMore {
+                                    self.jokes.append(contentsOf: mockJokes)
+                                    self.currentPage += 1
+                                } else {
+                                    self.jokes = mockJokes
+                                    self.currentPage = 2
+                                }
+                                self.error = nil
+                            case .failure(let mockError):
+                                self.error = mockError
+                            }
+                            self.onUpdate?()
                         }
-                        self.currentPage += 1 // always increment after loading mock data
                     }
                 }
                 self.onUpdate?()
