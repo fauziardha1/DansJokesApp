@@ -9,15 +9,36 @@ class FeedViewController: UIViewController {
         indicator.color = .black // Set the indicator color to dark
         return indicator
     }()
+    private let emptyStateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No jokes available.\nPlease check your connection or try again later."
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textColor = .secondaryLabel
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true // Initially hidden
+        return label
+    }()
+    private let reloadButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(systemName: "arrow.clockwise")
+        button.setImage(image, for: .normal)
+        button.tintColor = .systemBlue
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        button.accessibilityLabel = "Reload"
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
         title = "Feed"
         setupTableView()
         setupActivityIndicator()
         bindViewModel()
-        // Ensure activity indicator is visible above table view
         view.bringSubviewToFront(activityIndicator)
         viewModel.loadJokes()
     }
@@ -28,12 +49,22 @@ class FeedViewController: UIViewController {
         tableView.register(JokeCell.self, forCellReuseIdentifier: JokeCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
+        view.addSubview(emptyStateLabel)
+        view.addSubview(reloadButton) 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyStateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emptyStateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            reloadButton.topAnchor.constraint(equalTo: emptyStateLabel.bottomAnchor, constant: 16),
+            reloadButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        reloadButton.addTarget(self, action: #selector(reloadButtonTapped), for: .touchUpInside)
     }
     
     private func setupActivityIndicator() {
@@ -48,7 +79,6 @@ class FeedViewController: UIViewController {
     private func bindViewModel() {
         viewModel.onUpdate = { [weak self] in
             guard let self = self else { return }
-            // Move activity indicator visibility update to main thread
             DispatchQueue.main.async {
                 if self.viewModel.isLoading {
                     self.activityIndicator.startAnimating()
@@ -57,9 +87,18 @@ class FeedViewController: UIViewController {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
                 }
+                if !self.viewModel.isLoading && self.viewModel.jokes.isEmpty {
+                    self.emptyStateLabel.isHidden = false
+                    self.reloadButton.isHidden = false
+                    self.tableView.isHidden = true
+                } else {
+                    self.emptyStateLabel.isHidden = true
+                    self.reloadButton.isHidden = true
+                    self.tableView.isHidden = false
+                }
                 self.tableView.reloadData()
                 if let error = self.viewModel.error {
-                    let alert = UIAlertController(title: "Error", message: error.localizedDescription + "\n\n We'll show you mock data till we have good internet connection.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription + "\n\n We'll Please check your connection.", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
                     alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
                         self.viewModel.loadJokes()
@@ -68,6 +107,10 @@ class FeedViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @objc private func reloadButtonTapped() {
+        viewModel.loadJokes()
     }
 }
 

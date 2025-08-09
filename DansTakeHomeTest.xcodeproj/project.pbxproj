@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		AC5969432E47381500D5E429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC19C68A2E470925006A4584 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC19C6912E470925006A4584;
+			remoteInfo = DansTakeHomeTest;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		AC19C6922E470925006A4584 /* DansTakeHomeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DansTakeHomeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC59693F2E47381500D5E429 /* DansTakeHomeTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DansTakeHomeTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,10 +40,22 @@
 			path = DansTakeHomeTest;
 			sourceTree = "<group>";
 		};
+		AC5969402E47381500D5E429 /* DansTakeHomeTestTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DansTakeHomeTestTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AC19C68F2E470925006A4584 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC59693C2E47381500D5E429 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				AC19C6942E470925006A4584 /* DansTakeHomeTest */,
+				AC5969402E47381500D5E429 /* DansTakeHomeTestTests */,
 				AC19C6932E470925006A4584 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				AC19C6922E470925006A4584 /* DansTakeHomeTest.app */,
+				AC59693F2E47381500D5E429 /* DansTakeHomeTestTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +108,29 @@
 			productReference = AC19C6922E470925006A4584 /* DansTakeHomeTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AC59693E2E47381500D5E429 /* DansTakeHomeTestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC5969472E47381600D5E429 /* Build configuration list for PBXNativeTarget "DansTakeHomeTestTests" */;
+			buildPhases = (
+				AC59693B2E47381500D5E429 /* Sources */,
+				AC59693C2E47381500D5E429 /* Frameworks */,
+				AC59693D2E47381500D5E429 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AC5969442E47381500D5E429 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AC5969402E47381500D5E429 /* DansTakeHomeTestTests */,
+			);
+			name = DansTakeHomeTestTests;
+			packageProductDependencies = (
+			);
+			productName = DansTakeHomeTestTests;
+			productReference = AC59693F2E47381500D5E429 /* DansTakeHomeTestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -95,6 +143,10 @@
 				TargetAttributes = {
 					AC19C6912E470925006A4584 = {
 						CreatedOnToolsVersion = 16.3;
+					};
+					AC59693E2E47381500D5E429 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = AC19C6912E470925006A4584;
 					};
 				};
 			};
@@ -113,12 +165,20 @@
 			projectRoot = "";
 			targets = (
 				AC19C6912E470925006A4584 /* DansTakeHomeTest */,
+				AC59693E2E47381500D5E429 /* DansTakeHomeTestTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AC19C6902E470925006A4584 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC59693D2E47381500D5E429 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +195,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AC59693B2E47381500D5E429 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AC5969442E47381500D5E429 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC19C6912E470925006A4584 /* DansTakeHomeTest */;
+			targetProxy = AC5969432E47381500D5E429 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		AC19C6A62E470927006A4584 /* Debug */ = {
@@ -313,6 +388,42 @@
 			};
 			name = Release;
 		};
+		AC5969452E47381500D5E429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XLX6KD3AF8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fauziarda.DansTakeHomeTestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DansTakeHomeTest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DansTakeHomeTest";
+			};
+			name = Debug;
+		};
+		AC5969462E47381500D5E429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XLX6KD3AF8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fauziarda.DansTakeHomeTestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DansTakeHomeTest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DansTakeHomeTest";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -330,6 +441,15 @@
 			buildConfigurations = (
 				AC19C6A62E470927006A4584 /* Debug */,
 				AC19C6A72E470927006A4584 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC5969472E47381600D5E429 /* Build configuration list for PBXNativeTarget "DansTakeHomeTestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC5969452E47381500D5E429 /* Debug */,
+				AC5969462E47381500D5E429 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

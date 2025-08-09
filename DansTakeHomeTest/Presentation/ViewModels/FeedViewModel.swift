@@ -36,30 +36,10 @@ class FeedViewModel {
                         self.currentPage += 1
                     } else {
                         self.jokes = newJokes
-                        self.currentPage = 2 // next loadMore will fetch page 2
+                        self.currentPage = 2
                     }
                 case .failure(let error):
-                    // On error, try to get mock jokes from usecase
                     self.error = error
-                    self.onUpdate?()
-                    self.fetchJokesUseCase.fetchMockJokes(amount: self.pageSize) { mockResult in
-                        DispatchQueue.main.async {
-                            switch mockResult {
-                            case .success(let mockJokes):
-                                if loadMore {
-                                    self.jokes.append(contentsOf: mockJokes)
-                                    self.currentPage += 1
-                                } else {
-                                    self.jokes = mockJokes
-                                    self.currentPage = 2
-                                }
-                                self.error = nil
-                            case .failure(let mockError):
-                                self.error = mockError
-                            }
-                            self.onUpdate?()
-                        }
-                    }
                 }
                 self.onUpdate?()
             }
