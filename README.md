@@ -5,12 +5,10 @@ A simple iOS app to display a feed of jokes and manage bookmarks, built as part 
 ## Preview
 
 Below are screenshots of the app in action:
-
-### Feed Page
-![Feed Page](https://github.com/user-attachments/assets/c33933a6-990b-49e2-8496-972b721a0a7a)
-
-### Bookmarks Page
-![Bookmarks Page](https://github.com/user-attachments/assets/535164c6-0ea2-4c2d-9769-c58e3367b0b0)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c33933a6-990b-49e2-8496-972b721a0a7a" alt="Feed Page" width="300"/>
+  <img src="https://github.com/user-attachments/assets/535164c6-0ea2-4c2d-9769-c58e3367b0b0" alt="Bookmarks Page" width="300"/>
+</div>
 
 ## Features
 - Fetches jokes from [JokeAPI](https://v2.jokeapi.dev/joke/Any?amount=10)
