@@ -16,4 +16,8 @@ class BookmarkViewModel {
         bookmarks.removeAll { $0.id == joke.id }
         onUpdate?()
     }
+    
+    func loadBookmarks() {
+        onUpdate?()
+    }
 }

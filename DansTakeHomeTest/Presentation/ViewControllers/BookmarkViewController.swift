@@ -3,11 +3,23 @@ import UIKit
 class BookmarkViewController: UIViewController {
     var viewModel: BookmarkViewModel!
     private let tableView = UITableView()
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No bookmark data to show.\n Please bookmark some jokes to see them here."
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textColor = .secondaryLabel
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Bookmarks"
         setupTableView()
+        setupEmptyLabel()
         bindViewModel()
     }
     
@@ -25,10 +37,26 @@ class BookmarkViewController: UIViewController {
         ])
     }
     
+    private func setupEmptyLabel() {
+        view.addSubview(emptyLabel)
+        NSLayoutConstraint.activate([
+            emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
     private func bindViewModel() {
         viewModel.onUpdate = { [weak self] in
             self?.tableView.reloadData()
+            self?.updateEmptyState()
         }
+        viewModel.loadBookmarks()
+    }
+    
+    private func updateEmptyState() {
+        let isEmpty = viewModel.bookmarks.isEmpty
+        emptyLabel.isHidden = !isEmpty
+        tableView.isHidden = isEmpty
     }
 }
 
