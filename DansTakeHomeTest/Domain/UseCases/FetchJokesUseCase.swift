@@ -8,11 +8,14 @@ class FetchJokesUseCase {
         self.mockProvider = mockProvider
     }
     
-    func fetchJokes(amount: Int, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
-        provider.fetchJokes(amount: amount, completion: completion)
+    func fetchJokes(amount: Int, useMockData: Bool = false, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
+        guard useMockData else {
+            return provider.fetchJokes(amount: amount, completion: completion)
+        }
+        mockProvider.fetchJokes(amount: amount, completion: completion)
     }
     
-    func fetchMockJokes(amount: Int, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
+    private func fetchMockJokes(amount: Int, completion: @escaping (Result<[JokeEntity], Error>) -> Void) {
         mockProvider.fetchJokes(amount: amount, completion: completion)
     }
 }

@@ -20,4 +20,9 @@ class BookmarkViewModel {
     func loadBookmarks() {
         onUpdate?()
     }
+    
+    func removeAllBookmarks() {
+        bookmarks.removeAll()
+        onUpdate?()
+    }
 }

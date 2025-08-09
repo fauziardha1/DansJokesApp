@@ -10,6 +10,7 @@ class FeedViewModel {
     
     private var currentPage = 1
     private let pageSize = 10
+    var isUsingMockDataOnly = false
     
     init(fetchJokesUseCase: FetchJokesUseCase) {
         self.fetchJokesUseCase = fetchJokesUseCase
@@ -24,7 +25,7 @@ class FeedViewModel {
             jokes = []
             currentPage = 1
         }
-        fetchJokesUseCase.fetchJokes(amount: pageSize) { [weak self] result in
+        fetchJokesUseCase.fetchJokes(amount: pageSize, useMockData: isUsingMockDataOnly) { [weak self] result in
             self?.onUpdate?()
             DispatchQueue.main.async {
                 guard let self = self else { return }

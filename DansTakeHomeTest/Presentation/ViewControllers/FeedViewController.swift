@@ -33,6 +33,14 @@ class FeedViewController: UIViewController {
         return button
     }()
     
+    private var mockSwitch: UISwitch = {
+        let sw = UISwitch()
+        sw.isOn = false
+        sw.onTintColor = .systemGreen
+        sw.accessibilityLabel = "Use Mock Data"
+        return sw
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Feed"
@@ -50,7 +58,9 @@ class FeedViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         view.addSubview(emptyStateLabel)
-        view.addSubview(reloadButton) 
+        view.addSubview(reloadButton)
+        view.addSubview(mockSwitch)
+        setupMockSwitch()
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -110,6 +120,18 @@ class FeedViewController: UIViewController {
     }
     
     @objc private func reloadButtonTapped() {
+        viewModel.loadJokes()
+    }
+    
+    private func setupMockSwitch() {
+        mockSwitch.addTarget(self, action: #selector(mockSwitchChanged), for: .valueChanged)
+        let switchBarItem = UIBarButtonItem(customView: mockSwitch)
+        navigationItem.rightBarButtonItem = switchBarItem
+    }
+    
+    @objc private func mockSwitchChanged() {
+        viewModel.isUsingMockDataOnly = mockSwitch.isOn
+        bookmarkViewModel.removeAllBookmarks()
         viewModel.loadJokes()
     }
 }
